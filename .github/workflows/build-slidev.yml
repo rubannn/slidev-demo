@@ -32,7 +32,7 @@ jobs:
         run: npm i -D playwright-chromium && npx playwright install --with-deps chromium
 
       - name: Build slides
-        run: npx slidev build --base / --out ../docs --emptyOutDir
+        run: npx slidev build --base / --out ../docs
 
       - name: Export PDF
         run: |
