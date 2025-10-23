@@ -28,12 +28,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install playwright
-        run: npx playwright install --with-deps chromium
+      - name: Install Playwright Chromium
+        run: npm i -D playwright-chromium && npx playwright install --with-deps chromium
 
-      - name: Build HTML
-        run: |
-          npx slidev build --base / --out ../docs
+      - name: Build slides
+        run: npx slidev build --base / --out ../docs --emptyOutDir
 
       - name: Export PDF
         run: |
