@@ -30,7 +30,11 @@ jobs:
 
       - name: Build Slidev
         working-directory: slidev
-        run: npx slidev build --out ../docs
+        # ВАРИАНТ 1: жёстко прописать имя репозитория
+        # run: npx slidev build --base /REPO_NAME/ --out ../docs
+
+        # ВАРИАНТ 2: использовать имя репозитория из GitHub (рекомендуется)
+        run: npx slidev build --base "/${{ github.event.repository.name }}/" --out ../docs
 
       - name: Commit docs to repository
         run: |
