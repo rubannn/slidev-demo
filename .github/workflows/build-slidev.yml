@@ -1,61 +1,46 @@
-name: Build and Deploy Slidev
+name: Build Slidev to docs
 
 on:
   push:
     branches:
-      - main # или другая основная ветка
+      - main
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: slidev
-
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
+          cache-dependency-path: slidev/package-lock.json
 
       - name: Install dependencies
+        working-directory: slidev
         run: npm ci
 
-      - name: Install dependencies
-        run: npm install
+      - name: Build Slidev
+        working-directory: slidev
+        run: npx slidev build --out ../docs
 
-      - name: Install Playwright Chromium
-        run: npm i -D playwright-chromium && npx playwright install --with-deps chromium
-
-      - name: Build slides
-        run: npx slidev build --base / --out ../docs
-
-      - name: Export PDF
+      - name: Commit docs to repository
         run: |
-          npx playwright install chromium
-          npx slidev export --output ../docs/presentation.pdf
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Upload build as artifact for deployment
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: docs
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          git add docs
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update docs"
+            git push
+          fi
