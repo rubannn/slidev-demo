@@ -20,7 +20,7 @@ drawings:
   persist: false
 ---
 
-# Відділ підтримки програмного забезпечення 
+# Відділ підтримки програмного забезпечення
 
 <div @click="$slidev.nav.next" class="mt-10 py-1" hover:bg="white op-10">
   Натисніть Space, щоб перейти далі <carbon:arrow-right />
@@ -28,10 +28,6 @@ drawings:
 
 ---
 src: ./pages/01.md
----
-
----
-src: ./pages/02.md
 ---
 
 ---
