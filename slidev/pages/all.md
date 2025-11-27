@@ -2,9 +2,6 @@
 theme: seriph
 background: https://cover.sli.dev
 title: План презентації
-info: |
-  Слайди, зібрані за наданим планом.
-  Замініть плейсхолдери своїм контентом і (за потреби) локальними зображеннями.
 class: text-center
 transition: slide-left
 mdc: true

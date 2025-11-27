@@ -12,9 +12,7 @@ highlighter: shiki
 lineNumbers: false
 # some information about the slides, markdown enabled
 info: |
-  Слайди, зібрані за наданим планом.
-
-  Замініть плейсхолдери своїм контентом і (за потреби) локальними зображеннями.
+  Відділ підтримки програмного забезпечення
 # persist drawings in exports and build
 drawings:
   persist: false
@@ -29,6 +27,7 @@ drawings:
 ---
 src: ./pages/01.md
 ---
+
 
 ---
 src: ./pages/03.md
